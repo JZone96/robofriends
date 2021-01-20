@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import logo from '../logo.svg';
 import '../App.css';
 import 'tachyons';
-import SearchBox from '../components/SearchBox.js'
-import CardList from '../components/CardList.js'
+import SearchBox from '../components/SearchBox.js';
+import CardList from '../components/CardList.js';
+import Scroll from '../components/Scroll.js';
 
 class App extends Component{
   constructor(){ //what we need to change
@@ -28,18 +29,25 @@ class App extends Component{
 
 
   render(){
+    //we need to filter all the robots that includes in their username the letters written in the searchfield
+    const {robots,searchfield} = this.state;
+    const filteredRobots = robots.filter (robot =>{
+      return robot.username.toLowerCase().includes(searchfield.toLowerCase());
+    });
 
-    const filteredRobots = this.state.robots.filter (robot =>{
-      return robot.username.toLowerCase().includes(this.state.searchfield.toLowerCase());
-    })
+    if (robots.length){
     return (
       <div className='tc'>
         <h1>robofriends</h1>
         <SearchBox searchChange = {this.onSearchChange}/>
-        <CardList robots = {filteredRobots}/>
+        <Scroll>
+          <CardList robots = {filteredRobots}/>
+        </Scroll>
       </div>
       );
-
+    }else{
+       return <h1 className='tc'>LOADING...</h1>
+    }
   }
 }
 
