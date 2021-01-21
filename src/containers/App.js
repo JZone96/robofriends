@@ -5,6 +5,7 @@ import 'tachyons';
 import SearchBox from '../components/SearchBox.js';
 import CardList from '../components/CardList.js';
 import Scroll from '../components/Scroll.js';
+import ErrorBoundry from '../components/ErrorBoundry.js';
 
 class App extends Component{
   constructor(){ //what we need to change
@@ -40,9 +41,11 @@ class App extends Component{
       <div className='tc'>
         <h1>robofriends</h1>
         <SearchBox searchChange = {this.onSearchChange}/>
-        <Scroll>
-          <CardList robots = {filteredRobots}/>
-        </Scroll>
+        <ErrorBoundry>
+          <Scroll>
+            <CardList robots = {filteredRobots}/>
+         </Scroll>
+        </ErrorBoundry>
       </div>
       );
     }else{
